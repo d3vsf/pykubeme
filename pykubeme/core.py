@@ -38,7 +38,10 @@ class Client(object):
         >>> client.get(Resource.PODS)
     '''
 
-    def __init__(self, namespace=None, output_format='json'):
+    def __init__(self, namespace=None, output_format='json', kube_config_path=None):
+        if kube_config_path:
+            cmd = ['kubectl', 'config', '--kubeconfig', kube_config_path]
+            print(subprocess.check_output(cmd))  # TODO logger
         self.namespace = namespace
         self.output_format = output_format
 
