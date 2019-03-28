@@ -41,7 +41,7 @@ class Client(object):
     def __init__(self, namespace=None, output_format='json', kube_config_path=None):
         if kube_config_path:
             cmd = ['kubectl', 'config', '--kubeconfig', kube_config_path]
-            print(subprocess.check_output(cmd))  # TODO logger
+            # print(subprocess.check_output(cmd))  # TODO logger
         self.namespace = namespace
         self.output_format = output_format
 
@@ -59,9 +59,9 @@ class Client(object):
         if not string:
             return {}  # TODO error
 
-        cmd = ['kubectl'].extend(string.split(' '))
+        cmd = ['kubectl'] + string.split(' ')
         ret_code = json.loads(subprocess.check_output(cmd))
-        print(ret_code)
+        # print(ret_code)
         return ret_code
 
     def get(self, resource, filename=None, namespace=None, watch=False, output_format='json'):
@@ -84,7 +84,7 @@ class Client(object):
         if watch:
             cmd.append('-w')
         ret_code = json.loads(subprocess.check_output(cmd))
-        print(ret_code)
+        # print(ret_code)
         return ret_code
     
     def create(self, filename, namespace=None):
@@ -100,7 +100,7 @@ class Client(object):
         elif self.namespace:
             cmd.extend(['-n', self.namespace])
         ret_code = json.loads(subprocess.check_output(cmd))
-        print(ret_code)
+        # print(ret_code)
         return ret_code
 
     def delete(self, filename=None, namespace=None, resources=[], names=[], selector=None, all=False, now=False):
@@ -136,7 +136,7 @@ class Client(object):
             cmd.append('--now')
 
         ret_code = subprocess.check_output(cmd)
-        print(ret_code)
+        # print(ret_code)
         return ret_code
     
     def run(self, name, image, namespace=None, replicas=1, port=None, expose=False, service_account=None, envs=[], dry_run=False):
@@ -165,5 +165,7 @@ class Client(object):
             cmd.append('--dry-run')
 
         ret_code = json.loads(subprocess.check_output(cmd))
-        print(ret_code)
+        # print(ret_code)
         return ret_code
+
+# kubectl logs -n geodamp <pod-name>
